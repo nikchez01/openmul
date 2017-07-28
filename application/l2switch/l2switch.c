@@ -114,7 +114,6 @@ static void
 l2sw_add(mul_switch_t *sw)
 {
     l2sw_t      *l2sw = MUL_PRIV_SWITCH(sw);
-
     c_rw_lock_init(&l2sw->lock);
     l2sw->swid = sw->dpid;
     l2sw->l2fdb_htbl = g_hash_table_new_full(l2fdb_key,
@@ -158,20 +157,20 @@ l2sw_install_dfl_flows(uint64_t dpid)
     of_mask_set_dl_dst(&mask); 
     mul_app_send_flow_add(L2SW_APP_NAME, NULL, dpid, &fl, &mask,
                           L2SW_UNK_BUFFER_ID, NULL, 0, 0, 0, 
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
     /* Zero SRC MAC Drop */
     of_mask_set_dc_all(&mask);
     of_mask_set_dl_src(&mask); 
     mul_app_send_flow_add(L2SW_APP_NAME, NULL, dpid, &fl, &mask, 
                           L2SW_UNK_BUFFER_ID, NULL, 0, 0, 0,  
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
     /* Broadcast SRC MAC Drop */
     memset(&fl.dl_src, 0xff, OFP_ETH_ALEN);
     mul_app_send_flow_add(L2SW_APP_NAME, NULL, dpid, &fl, &mask,
                           L2SW_UNK_BUFFER_ID, NULL, 0, 0, 0,
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
 
     /* Send any unknown flow to app */
@@ -179,7 +178,7 @@ l2sw_install_dfl_flows(uint64_t dpid)
     of_mask_set_dc_all(&mask);
     mul_app_send_flow_add(L2SW_APP_NAME, NULL, dpid, &fl, &mask,
                           L2SW_UNK_BUFFER_ID, NULL, 0, 0, 0, C_FL_PRIO_LDFL, 
-                          C_FL_ENT_LOCAL);
+                          C_FL_ENT_LOCAL,0,0);
     
     /* Default flow to be added in switch so that switch sends all 
      * IGMP packets to Controller */
@@ -198,7 +197,7 @@ l2sw_install_dfl_flows(uint64_t dpid)
                           mdata.act_base, mul_app_act_len(&mdata),
                           0, 0,
                           C_FL_PRIO_EXM,
-                          C_FL_ENT_GSTATS | C_FL_ENT_CTRL_LOCAL);
+                          C_FL_ENT_GSTATS | C_FL_ENT_CTRL_LOCAL,0,0);
 
     mul_app_act_free(&mdata);
 }
@@ -237,7 +236,7 @@ l2sw_mod_flow(l2sw_t *l2sw, l2fdb_ent_t *fdb,
                               &mask, buffer_id,
                               mdata.act_base, mul_app_act_len(&mdata),
                               L2FDB_ITIMEO_DFL, L2FDB_HTIMEO_DFL,
-                              C_FL_PRIO_DFL, C_FL_ENT_NOCACHE);
+                              C_FL_PRIO_DFL, C_FL_ENT_NOCACHE,0,0);
         mul_app_act_free(&mdata);
     } else {
         mul_app_send_flow_del(L2SW_APP_NAME, NULL, l2sw->swid, &fl,
@@ -281,7 +280,7 @@ __l2sw_mod_mflow(l2sw_t *l2sw, l2mfdb_ent_t *mfdb,  bool add)
                               &mask, 0xffffffff,
                               mdata.act_base, mul_app_act_len(&mdata),
                               0, 0,
-                              C_FL_PRIO_DFL, C_FL_ENT_NOCACHE); 
+                              C_FL_PRIO_DFL, C_FL_ENT_NOCACHE,0,0); 
         mul_app_act_free(&mdata);
     } else {
         mul_app_send_flow_del(L2SW_APP_NAME, NULL, l2sw->swid, &fl,
@@ -313,7 +312,7 @@ __l2sw_mod_umflow(l2sw_t *l2sw, struct flow *in_fl, uint32_t port)
                           &mask, 0xffffffff,
                           mdata.act_base, mul_app_act_len(&mdata),
                           L2MFDB_ITIMEO_DFL, L2MFDB_HTIMEO_DFL,
-                          C_FL_PRIO_DFL, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DFL, C_FL_ENT_NOCACHE,0,0);
     mul_app_act_free(&mdata);
 
     return 0;

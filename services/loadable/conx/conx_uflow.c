@@ -204,7 +204,7 @@ conx_uflow_install(user_fl_ent_t *uflow, uint64_t flags)
                 uflow->egress_actions,
                 uflow->act_len,
                 0, 0, uflow->prio,
-                flags);
+                flags,0,0);
         uflow->flow.table_id = CONX_L1_TABLE_ID;
         if(!(flags & C_FL_NO_ACK)) {
             if (c_service_timed_wait_response(conx->mul_service)) {
@@ -253,7 +253,7 @@ conx_uflow_install(user_fl_ent_t *uflow, uint64_t flags)
             &uflow->flow, &uflow->mask,
             OFP_NO_BUFFER,
             mdata.act_base, mul_app_act_len(&mdata),
-            0, 0, uflow->prio, flags);
+            0, 0, uflow->prio, flags,0,0);
     if(!(flags & C_FL_NO_ACK)) {
         if ((err = c_service_timed_wait_response(conx->mul_service))) {
             char *fl_str;
@@ -285,7 +285,7 @@ install_dst:
             OFP_NO_BUFFER,
             uflow->egress_actions,
             uflow->act_len,
-            0, 0, uflow->prio, flags);
+            0, 0, uflow->prio, flags,0,0);
     if (reset) of_mask_set_in_port(&uflow->mask);
     uflow->flow.table_id = CONX_L1_TABLE_ID;
     if(!(flags & C_FL_NO_ACK)) {

@@ -664,7 +664,7 @@ prism_route_mod_self(prism_app_struct_t *prism_ctx UNUSED,
                               PRISM_UNK_BUFFER_ID, mdata.act_base,
                               mul_app_act_len(&mdata),
                               0, 0, C_FL_PRIO_EXM,
-                              /* C_FL_ENT_GSTATS |*/ C_FL_ENT_CTRL_LOCAL);
+                              /* C_FL_ENT_GSTATS |*/ C_FL_ENT_CTRL_LOCAL,0,0);
         mul_app_act_free(&mdata);
 
 #if 0

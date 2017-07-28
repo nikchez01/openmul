@@ -283,7 +283,7 @@ add_static_flow(uint64_t datapath_id, uint8_t priority, char *barrier, char *sta
     mul_service_send_flow_add(nbapi_app_data->mul_service, datapath_id,
                                 flow, mask, 0xffffffff, 
                                 actions, action_len, 
-                                0, 0, priority, flags);
+                                0, 0, priority, flags,0,0);
 
     if (c_service_timed_wait_response(nbapi_app_data->mul_service) > 0) {
         goto free_and_return;

@@ -443,7 +443,7 @@ prism_switch_add(prism_app_struct_t *prism_ctx, uint64_t dpid, int alias)
     mul_app_send_flow_add(PRISM_APP_NAME, NULL, dpid, &fl, &mask,
             PRISM_UNK_BUFFER_ID, NULL,
             0, 0, 0, C_FL_PRIO_LDFL,
-            C_FL_ENT_LOCAL);
+            C_FL_ENT_LOCAL,0,0);
 
     return 0;
 }

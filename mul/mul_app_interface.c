@@ -1688,7 +1688,7 @@ mul_app_send_flow_add(void *app_name, void *sw_arg, uint64_t dpid,
                       struct flow *fl, struct flow *fl_mask,
                       uint32_t buffer_id, void *actions,
                       size_t action_len, uint16_t itimeo,
-                      uint16_t htimeo, uint16_t prio, uint64_t flags)  
+                      uint16_t htimeo, uint16_t prio, uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie)  
 {
     c_switch_t *sw = sw_arg;
     struct of_flow_mod_params fl_parms;

@@ -65,7 +65,7 @@ serv_chain_ent_install(void *ent, void *uarg)
                           chain_ent->actions, chain_ent->act_len,
                           0, 0,
                           C_FL_PRIO_FWD,
-                          C_FL_ENT_GSTATS);
+                          C_FL_ENT_GSTATS,0,0);
 
     if (c_service_timed_wait_response(makdi_hdl->mul_service) > 0) {
         c_log_err("[hop-fl-install] WARNING flow add failed");

@@ -67,7 +67,7 @@ fab_add_dhcp_tap_per_switch(void *opq UNUSED, uint64_t dpid)
                           &mask, 0xffffffff,
                           mdata.act_base, mul_app_act_len(&mdata),
                           0, 0,
-                          C_FL_PRIO_FWD, C_FL_ENT_GSTATS);
+                          C_FL_PRIO_FWD, C_FL_ENT_GSTATS,0,0);
     mul_app_act_free(&mdata); 
 }
 
@@ -197,7 +197,7 @@ fab_add_arp_tap_per_switch(void *opq, uint64_t dpid)
 
     mul_app_send_flow_add(FAB_APP_NAME, opq, dpid, &fl, &mask,
                           (uint32_t)-1, NULL, 0, 0, 0, C_FL_PRIO_DFL,
-                          C_FL_ENT_LOCAL);
+                          C_FL_ENT_LOCAL,0,0);
 }
 
 /**
@@ -275,20 +275,20 @@ fab_add_all_flows_per_switch(uint64_t dpid)
     of_mask_set_dl_dst(&mask);
     mul_app_send_flow_add(FAB_APP_NAME, NULL, dpid, &fl, &mask,
                           FAB_UNK_BUFFER_ID, NULL, 0, 0, 0,
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
     /* Zero SRC MAC Drop */
     of_mask_set_dc_all(&mask);
     of_mask_set_dl_src(&mask);
     mul_app_send_flow_add(FAB_APP_NAME, NULL, dpid, &fl, &mask,
                           FAB_UNK_BUFFER_ID, NULL, 0, 0, 0,
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
     /* Broadcast SRC MAC Drop */
     memset(&fl.dl_src, 0xff, OFP_ETH_ALEN);
     mul_app_send_flow_add(FAB_APP_NAME, NULL, dpid, &fl, &mask,
                           FAB_UNK_BUFFER_ID, NULL, 0, 0, 0,
-                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_DRP, C_FL_ENT_NOCACHE,0,0);
 
 
     /* Send any unknown flow to app */
@@ -296,7 +296,7 @@ fab_add_all_flows_per_switch(uint64_t dpid)
     of_mask_set_dc_all(&mask);
     mul_app_send_flow_add(FAB_APP_NAME, NULL, dpid, &fl, &mask,
                           FAB_UNK_BUFFER_ID, NULL, 0, 0, 0, C_FL_PRIO_LDFL,
-                          C_FL_ENT_LOCAL);
+                          C_FL_ENT_LOCAL,0,0);
 
     /* Default flow to be added in switch so that switch sends all
      * IGMP packets to Controller */
@@ -314,7 +314,7 @@ fab_add_all_flows_per_switch(uint64_t dpid)
                           &mask, 0xffffffff,
                           mdata.act_base, mul_app_act_len(&mdata),
                           0, 0,
-                          C_FL_PRIO_EXM, C_FL_ENT_NOCACHE);
+                          C_FL_PRIO_EXM, C_FL_ENT_NOCACHE,0,0);
 
     mul_app_act_free(&mdata);
 

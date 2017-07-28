@@ -312,14 +312,14 @@ apply_route:
                           FAB_UNK_BUFFER_ID,
                           mdata.act_base, mul_app_act_len(&mdata), 
                           0, 0, froute->prio,
-                          C_FL_ENT_SWALIAS  | C_FL_ENT_GSTATS);
+                          C_FL_ENT_SWALIAS  | C_FL_ENT_GSTATS,0,0);
 
     if(fab_ctx->fab_learning == FAB_HOST_TRACKER_ENABLED) {
         froute->rt_flow.dl_type = ntohs(ETH_TYPE_ARP);
         mul_app_send_flow_add(FAB_APP_NAME, NULL, (uint64_t)(rt_elem->sw_alias), 
                 &froute->rt_flow, &froute->rt_mask, FAB_UNK_BUFFER_ID,
                 mdata.act_base, mul_app_act_len(&mdata), 0, 0,
-                froute->prio, C_FL_ENT_SWALIAS | C_FL_ENT_GSTATS);
+                froute->prio, C_FL_ENT_SWALIAS | C_FL_ENT_GSTATS,0,0);
     }
 
     /* Reset flow modifications if any */

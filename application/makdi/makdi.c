@@ -114,7 +114,7 @@ makdi_install_dfl_flows(uint64_t dpid)
 
     mul_app_send_flow_add(MAKDI_APP_NAME, NULL, dpid, &fl, &mask, MAKDI_UNK_BUFFER_ID,
                           NULL, 0, 0, 0, C_FL_PRIO_DFL, 
-                          C_FL_ENT_LOCAL);
+                          C_FL_ENT_LOCAL,0,0);
 }
 
 static void
@@ -429,7 +429,7 @@ __s_dp_reg_per_port(void *key UNUSED, void *dp, void *uarg)
                           actions, act_len,
                           0, 0,
                           C_FL_PRIO_DFL, 
-                          C_FL_ENT_STATIC|C_FL_ENT_GSTATS);
+                          C_FL_ENT_STATIC|C_FL_ENT_GSTATS,0,0);
 
     fl_ent = calloc(1, sizeof(*fl_ent));
     fl_ent->dpid = fdb->dpid;

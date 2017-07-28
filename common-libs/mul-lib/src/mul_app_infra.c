@@ -1162,7 +1162,7 @@ static struct cbuf *
 mul_app_prep_flow_add(uint64_t dpid, struct flow *fl, struct flow *mask,
                       uint32_t buffer_id, void *actions, size_t action_len,
                       uint16_t itimeo, uint16_t htimeo, uint16_t prio,
-                      uint64_t flags)
+                      uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie)
 {
     c_ofp_flow_mod_t *cofp_fm;
     void *act;
@@ -1189,8 +1189,8 @@ mul_app_prep_flow_add(uint64_t dpid, struct flow *fl, struct flow *mask,
     cofp_fm->htimeo = htons(htimeo);
     cofp_fm->buffer_id = htonl(buffer_id);
     cofp_fm->oport = OF_NO_PORT;
-    cofp_fm->cookie = htonl(hdl->app_cookie);
-
+    cofp_fm->cookie = htonl(base_cookie);
+    cofp_fm->seq_cookie = htonl(seq_cookie);
     act = ASSIGN_PTR(cofp_fm->actions);
     memcpy(act, actions, action_len);
 
@@ -1224,12 +1224,12 @@ mul_app_send_flow_add(void *app_name UNUSED, void *sw_arg UNUSED,
                       uint64_t dpid, struct flow *fl, struct flow *mask,
                       uint32_t buffer_id, void *actions, size_t action_len,
                       uint16_t itimeo, uint16_t htimeo, uint16_t prio,
-                      uint64_t flags)
+                      uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie)
 {
     struct cbuf *b;
 
     b = mul_app_prep_flow_add(dpid, fl, mask, buffer_id, actions, action_len,
-                              itimeo, htimeo, prio, flags);
+                              itimeo, htimeo, prio, flags,base_cookie,seq_cookie);
     mul_app_command_handler(NULL, b);
 
     return 0;
@@ -1274,12 +1274,12 @@ mul_service_send_flow_add(void *service,
                           uint64_t dpid, struct flow *fl, struct flow *mask,
                           uint32_t buffer_id, void *actions, size_t action_len,
                           uint16_t itimeo,  uint16_t htimeo, uint16_t prio,
-                          uint64_t flags)
+                          uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie)
 {
     struct cbuf *b;
 
     b = mul_app_prep_flow_add(dpid, fl, mask, buffer_id, actions, action_len,
-                              itimeo, htimeo, prio, flags);
+                              itimeo, htimeo, prio, flags,base_cookie, seq_cookie);
     c_service_send(service, b);
 
     return 0;

@@ -335,7 +335,7 @@ conx_phop_route_flow_install(void *rt, conx_op_res_t *res)
                           mdata.act_base, mul_app_act_len(&mdata),
                           0, 0,
                           prio,
-                          C_FL_ENT_GSTATS);
+                          C_FL_ENT_GSTATS,0,0);
     mul_app_act_free(&mdata);
 
     if ((rcode = c_service_timed_wait_response(conx->mul_service))) {

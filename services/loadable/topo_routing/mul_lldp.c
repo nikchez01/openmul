@@ -668,7 +668,7 @@ lldp_switch_add(mul_switch_t *sw)
                           0, 0,
                           C_FL_PRIO_EXM, 
                           C_FL_ENT_LOCAL
-                          /*C_FL_ENT_GSTATS | C_FL_ENT_CTRL_LOCAL*/);
+                          /*C_FL_ENT_GSTATS | C_FL_ENT_CTRL_LOCAL*/,0,0);
     mul_app_act_free(&mdata);
 
     return;

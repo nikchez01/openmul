@@ -4030,7 +4030,7 @@ DEFUN (flow_commit,
                                   actions, action_len,
                                   args->idle_timeout, args->hard_timeout, 
                                   args->fl_prio, 
-                                  args->flags | C_FL_ENT_STATIC);
+                                  args->flags | C_FL_ENT_STATIC,0,0);
             if (!(args->flags & C_FL_NO_ACK) &&
                 c_service_timed_wait_response(cli->mul_service) > 0) {
                 vty_out(vty, "Failed to add a flow. Check log messages%s", 

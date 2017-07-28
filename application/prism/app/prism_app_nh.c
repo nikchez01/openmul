@@ -428,7 +428,7 @@ prism_next_hop_flow_install(uint32_t next_hop, uint32_t oif, uint64_t dpid,
             dpid, &fl, &mask,
             PRISM_UNK_BUFFER_ID, mdata.act_base,
             mul_app_act_len(&mdata),
-            0, 0, C_FL_PRIO_FWD, 0/*C_FL_ENT_GSTATS*/);
+            0, 0, C_FL_PRIO_FWD, 0/*C_FL_ENT_GSTATS*/,0,0);
     mul_app_act_free(&mdata);
     
     if (c_service_timed_wait_response(prism_ctx->prism_mul_service) > 0) {

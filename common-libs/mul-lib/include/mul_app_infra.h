@@ -96,12 +96,12 @@ int mul_app_send_flow_add(void *app_name, void *sw_arg,
                       uint64_t dpid, struct flow *fl, struct flow *mask,
                       uint32_t buffer_id, void *actions, size_t action_len,
                       uint16_t itimeo, uint16_t htimeo, uint16_t prio,
-                      uint64_t flags);
+                      uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie);
 int mul_service_send_flow_add(void *service,
                           uint64_t dpid, struct flow *fl, struct flow *mask,
                           uint32_t buffer_id, void *actions, size_t action_len,
                           uint16_t itimeo, uint16_t htimeo, uint16_t prio,
-                          uint64_t flags);
+                          uint64_t flags, uint32_t base_cookie, uint32_t seq_cookie);
 int mul_app_send_flow_del(void *app_name, void *sw_arg, uint64_t dpid,
                           struct flow *fl, struct flow *mask,
                           uint32_t port, uint16_t prio, uint64_t flag,
